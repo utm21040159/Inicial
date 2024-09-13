@@ -1,7 +1,14 @@
-const mongoose = require('mongoose');
-const urlbd = "mongodb://localhost:27017/UTMA"
+import { test } from "./Backend/controllers/alumno.controller.js";
+import mongoose from "mongoose";
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
-mongoose.connect(urlbd)
+
+dotenv.config()
+
+
+mongoose.connect(process.env.urlbd)
 .then(()=>{
     console.log("Coneccion a Base de Datos")
 })
@@ -9,22 +16,12 @@ mongoose.connect(urlbd)
     console.log("no funciona la coneccion", error)
 });
 
-const EsqumaAlumnos = new mongoose.Schema ({
-    name:{
-        type:String
-    },
-    apepat:{
-        type:String
-    },
-    edad:{
-        type:Number
-    }
+
+const app = express();
+app.use(cors())
+
+app.listen(4000,()=> {
+    console.log("Se escucha bien")
 })
 
-const modeloAlumnos = new mongoose.model("Tabla de Alumnos",EsqumaAlumnos)
-
-modeloAlumnos.create({
-    name:"Daniel",
-    apepat:"Lopez",
-    edad: 21
-})
+test()
